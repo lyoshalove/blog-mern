@@ -8,14 +8,17 @@ import handleValidationErrors from './utils/handleValidationErrors.js';
 import { UserController, PostController } from './controllers/index.js';
 import cors from 'cors';
 import fs from 'fs';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 mongoose
-  .connect("mongodb+srv://Lyosha:bebra@cluster0.slhsr78.mongodb.net/blog?retryWrites=true&w=majority")
+  .connect(process.env.MONGODB_URI)
   .then(() => console.log('Mongo connected'))
   .catch((error) => console.log('Mongo ERROR', error));
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 const storage = multer.diskStorage({
   destination: (_, __, callback) => {
     if(!fs.existsSync('uploads')) {
@@ -78,4 +81,4 @@ app.patch(
   PostController.updatePost
 );
 
-app.listen( PORT, () => console.log(`Server started on ${PORT} port`));
+app.listen(PORT, () => console.log(`Server started on ${PORT} port`));

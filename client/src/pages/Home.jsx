@@ -21,8 +21,6 @@ export const Home = () => {
     dispatch(fetchTags());
   }, []);
 
-  console.log(tags);
-
   return (
     <>
       <Tabs
@@ -45,7 +43,7 @@ export const Home = () => {
                   id={obj._id}
                   title={obj.title}
                   imageUrl={obj.imageUrl}
-                  user={obj.user.fullname}
+                  user={obj.user}
                   createdAt={obj.createdAt}
                   viewsCount={obj.viewsCount}
                   commentsCount={3}
