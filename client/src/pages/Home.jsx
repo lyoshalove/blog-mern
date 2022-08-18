@@ -36,27 +36,25 @@ export const Home = () => {
           {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) =>
             isPostsLoading ? (
               <Post key={index} isLoading={true} />
-            ) : 
-              posts.items.length > 0 
-              ? (
-                <Post
-                  id={obj._id}
-                  title={obj.title}
-                  imageUrl={obj.imageUrl}
-                  user={obj.user}
-                  createdAt={obj.createdAt}
-                  viewsCount={obj.viewsCount}
-                  commentsCount={3}
-                  tags={obj.tags}
-                  isEditable={userData?._id === obj.user._id}
-                />
-              )
-             : (<h2>Статей пока нет..</h2>)
+            ) : (
+              <Post
+                id={obj._id}
+                title={obj.title}
+                imageUrl={obj.imageUrl}
+                user={obj.user}
+                createdAt={obj.createdAt}
+                viewsCount={obj.viewsCount}
+                commentsCount={3}
+                tags={obj.tags}
+                isEditable={userData?._id === obj.user._id}
+              />
+            )
           )}
+          {!posts.items.length && <h2>Статей пока нет..</h2>}
         </Grid>
         <Grid xs={4} item>
           <TagsBlock items={tags.items} isLoading={iTagsLoading} />
-          <CommentsBlock
+          {/* <CommentsBlock
             items={[
               {
                 user: {
@@ -74,7 +72,7 @@ export const Home = () => {
               },
             ]}
             isLoading={false}
-          />
+          /> */}
         </Grid>
       </Grid>
     </>

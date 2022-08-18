@@ -34,6 +34,8 @@ export const Post = ({
     }
   };
 
+  console.log(user)
+
   if (isLoading) {
     return <PostSkeleton />;
   }

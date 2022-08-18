@@ -19,9 +19,10 @@ export const Registration = () => {
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
-      fullname: '',
+      fullname: "",
       email: "",
       password: "",
+      avatarUrl: "",
     },
     mode: "onChange",
   });
@@ -37,6 +38,8 @@ export const Registration = () => {
     if (data.payload.token) {
       window.localStorage.setItem("token", data.payload.token);
     }
+
+    console.log(values);
   };
 
   if (isAuth) {
@@ -78,7 +81,22 @@ export const Registration = () => {
           helperText={errors.password?.message}
           {...register("password", { required: "Укажите пароль" })}
         />
-        <Button disabled={!isValid} type="submit" size="large" variant="contained" fullWidth>
+        <TextField
+          className={styles.field}
+          label="Ссылка на аватарку"
+          fullWidth
+          type="text"
+          error={Boolean(errors.avatarUrl?.message)}
+          helperText={errors.avatarUrl?.message}
+          {...register("avatarUrl")}
+        />
+        <Button
+          disabled={!isValid}
+          type="submit"
+          size="large"
+          variant="contained"
+          fullWidth
+        >
           Зарегистрироваться
         </Button>
       </form>

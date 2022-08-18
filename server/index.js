@@ -81,4 +81,6 @@ app.patch(
   PostController.updatePost
 );
 
+app.post("/posts/:id", checkAuth, PostController.createComment);
+
 app.listen(PORT, () => console.log(`Server started on ${PORT} port`));

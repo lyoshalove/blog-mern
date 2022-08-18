@@ -60,12 +60,49 @@ export const getOne = async (req, res) => {
 
         return res.json(doc);
       }
+    ).populate('user').clone();
+  } catch(e) {
+    console.log(e);
+    return res.status(500).json({
+      message: "Не удалось получить статью",
+    });
+  }
+};
+
+export const createComment = async (req, res) => {
+  try {
+    const postId = req.params.id;
+
+    await PostModel.findOneAndUpdate(
+      {
+        _id: postId,
+      },
+      {
+        $push: {
+          comments: [{
+            user: req.userId,
+            text: req.body.text,
+          }],
+        },
+      },
+      {
+        returnDocument: "after",
+      },
+      (error, doc) => {
+        if (error) {
+          return res.status(500).json({
+            message: "Не удалось добавить комментарий",
+          });
+        }
+
+        return res.json(doc);
+      }
     ).populate('user');
   } catch(e) {
     console.log(e);
-    // return res.status(500).json({
-    //   message: "Не удалось получить статью",
-    // });
+    return res.status(500).json({
+      message: "Не удалось создать комментарий",
+    });
   }
 };
 
@@ -119,9 +156,9 @@ export const deletePost = async (req, res) => {
 
   } catch(e) {
     console.log(e);
-    // res.status(500).json({
-    //   message: "Не удалось удалить статью",
-    // });
+    res.status(500).json({
+      message: "Не удалось удалить статью",
+    });
   }
 };
 
